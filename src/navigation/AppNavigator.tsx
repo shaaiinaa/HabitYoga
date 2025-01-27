@@ -8,6 +8,7 @@ import MyReferral from '../screens/MyReferral';
 import LeaderboardScreen from '../screens/LeaderBoardScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import AuthNative from '../Auth.native';
+import HelpCenter from '../components/HelpCenter';
 
 const Stack = createNativeStackNavigator();
 export default function AppNavigator() {
@@ -23,6 +24,7 @@ export default function AppNavigator() {
         <Stack.Screen name="MyRef" component={MyReferral} />
         <Stack.Screen name="LeaderBoard" component={LeaderboardScreen} />
         <Stack.Screen name="Google" component={AuthNative} />
+        <Stack.Screen name="HelpCenter" component={HelpCenter} />
       </Stack.Navigator>
     </NavigationContainer>
   );

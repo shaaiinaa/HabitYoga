@@ -13,6 +13,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 // import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomNav} from '../components/BottomNav';
+import {LifeBuoy} from 'lucide-react-native';
 
 type Props = {
   navigation: NativeStackNavigationProp<any>;
@@ -194,6 +195,24 @@ export default function ReferralScreen({navigation}: Props) {
           </View>
         </View>
       </ScrollView>
+      {/* Support Icon */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate('HelpCenter')}
+        style={{
+          position: 'absolute',
+          bottom: 80, // Increased to account for BottomNav
+          right: 16,
+          backgroundColor: '#2563eb',
+          padding: 12,
+          borderRadius: 50,
+          shadowColor: '#000',
+          shadowOffset: {width: 0, height: 2},
+          shadowOpacity: 0.3,
+          shadowRadius: 4,
+        }}
+        activeOpacity={0.8}>
+        <LifeBuoy color="white" width={24} height={24} />
+      </TouchableOpacity>
       <BottomNav navigation={navigation} />
     </SafeAreaView>
   );
@@ -355,20 +374,7 @@ const styles = StyleSheet.create({
     gap: 16,
     marginTop: 16,
   },
-  // shortcutItem: {
-  //   width: '45%',
-  //   aspectRatio: 1,
-  //   backgroundColor: '#f5f5f5',
-  //   borderRadius: 8,
-  //   padding: 16,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // shortcutIcon: {
-  //   width: 32,
-  //   height: 32,
-  //   marginBottom: 8,
-  // },
+
   shortcutItem: {
     width: '45%',
     aspectRatio: 1, // Ensures the item is square

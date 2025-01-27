@@ -60,6 +60,7 @@
 // });
 
 // export default SignUpScreen;
+
 import React, {useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {supabase} from '../lib/supabase';
@@ -77,9 +78,14 @@ type Props = {
 
 export default function EmailForm({navigation}: Props) {
   GoogleSignin.configure({
-    scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+    // scopes: [
+    //   'https://www.googleapis.com/auth/userinfo.email',
+    //   'https://www.googleapis.com/auth/drive.readonly',
+    //   'https://www.googleapis.com/auth/userinfo.profile',
+    // ],
+    scopes: ['profile', 'email'],
     webClientId:
-      '84931455035-jttocbne93p5do53tgudok254pdktur8.apps.googleusercontent.com',
+      '84931455035-5c9r2ven483l8sp013153n6f0up2l8ip.apps.googleusercontent.com',
   });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -99,14 +105,14 @@ export default function EmailForm({navigation}: Props) {
 
   async function signUpWithEmail() {
     setLoading(true);
-    console.log('0---------------');
+    console.log('-0---------------');
     console.log(supabase);
-    console.log('1---------------');
+    console.log('-1---------------');
     const data = await supabase.auth.signUp({
       email: email,
       password: password,
     });
-    console.log('2---------------', data);
+    console.log('-2---------------', data);
     const {
       data: {session},
       error,
@@ -155,49 +161,25 @@ export default function EmailForm({navigation}: Props) {
           onPress={() => signUpWithEmail()}
         />
       </View>
-      {/* <GoogleSigninButton
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={async () => {
-          try {
-            await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
-            if (userInfo.data.idToken) {
-              const {data, error} = await supabase.auth.signInWithIdToken({
-                provider: 'google',
-                token: userInfo.data.idToken,
-              });
-              console.log(error, data);
-            } else {
-              throw new Error('no ID token present!');
-            }
-          } catch (error: any) {
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-              // user cancelled the login flow
-            } else if (error.code === statusCodes.IN_PROGRESS) {
-              // operation (e.g. sign in) is in progress already
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-              // play services not available or outdated
-            } else {
-              // some other error happened
-            }
-          }
-        }}
-      /> */}
+
       <GoogleSigninButton
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
         onPress={async () => {
+          console.log('----------- STEP - 0 -----------');
           try {
-            await GoogleSignin.hasPlayServices();
-
+            await GoogleSignin.hasPlayServices({
+              showPlayServicesUpdateDialog: true,
+            });
+            console.log('----------- STEP - 1 1-----------');
             const userInfo = await GoogleSignin.signIn();
+            console.log('----------- STEP - 2 2-----------');
             console.log('Google User Info:', userInfo); // Debug log
 
-            if (userInfo.idToken) {
+            if (userInfo.data.idToken) {
               const {data, error} = await supabase.auth.signInWithIdToken({
                 provider: 'google',
-                token: userInfo.idToken,
+                token: userInfo.data.idToken,
               });
 
               if (error) {
